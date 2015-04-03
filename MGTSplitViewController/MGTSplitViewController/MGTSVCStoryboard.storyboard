@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+    </dependencies>
+    <scenes>
+        <!--Split View Controller-->
+        <scene sceneID="aMd-7b-ewG">
+            <objects>
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="qmn-Zh-ABX" customClass="MGTSplitViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="G7k-2X-L3j"/>
+                        <viewControllerLayoutGuide type="bottom" id="aIU-mz-jEp"/>
+                    </layoutGuides>
+                    <view key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="YJe-Bt-fIO">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mJ4-RA-CPx">
+                                <rect key="frame" x="320" y="0.0" width="280" height="600"/>
+                                <connections>
+                                    <segue destination="acv-IT-ut6" kind="embed" id="ROs-Aa-7Ct"/>
+                                </connections>
+                            </containerView>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GXb-RR-snI">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="600"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="320" id="RiX-bz-4vo"/>
+                                </constraints>
+                                <connections>
+                                    <segue destination="oKX-R1-DYv" kind="embed" id="Bx9-1S-9Xf"/>
+                                </connections>
+                            </containerView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="GXb-RR-snI" firstAttribute="leading" secondItem="YJe-Bt-fIO" secondAttribute="leading" id="T53-iP-tqc"/>
+                            <constraint firstItem="aIU-mz-jEp" firstAttribute="top" secondItem="GXb-RR-snI" secondAttribute="bottom" id="VlH-ht-0L6"/>
+                            <constraint firstItem="GXb-RR-snI" firstAttribute="top" secondItem="YJe-Bt-fIO" secondAttribute="top" id="b3n-9l-LoV"/>
+                            <constraint firstItem="mJ4-RA-CPx" firstAttribute="leading" secondItem="GXb-RR-snI" secondAttribute="trailing" id="mDF-zv-2eH"/>
+                            <constraint firstAttribute="trailing" secondItem="mJ4-RA-CPx" secondAttribute="trailing" id="qqU-d3-N4X"/>
+                            <constraint firstItem="aIU-mz-jEp" firstAttribute="top" secondItem="mJ4-RA-CPx" secondAttribute="bottom" id="u8C-Bo-Nbz"/>
+                            <constraint firstItem="mJ4-RA-CPx" firstAttribute="top" secondItem="YJe-Bt-fIO" secondAttribute="top" id="yiO-TJ-URP"/>
+                        </constraints>
+                    </view>
+                    <toolbarItems/>
+                    <connections>
+                        <outlet property="detailViewController" destination="mJ4-RA-CPx" id="CMw-fr-x0a"/>
+                        <outlet property="masterViewController" destination="GXb-RR-snI" id="Xyh-4c-y5j"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="q9m-Ff-HxH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-910" y="-803"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="Bi2-oH-drj">
+            <objects>
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="oKX-R1-DYv" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="D4y-ox-0rB"/>
+                        <viewControllerLayoutGuide type="bottom" id="prj-1w-nRi"/>
+                    </layoutGuides>
+                    <view key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="O1M-Uf-YyY">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <toolbarItems/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lIS-R3-75Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-180" y="-1165"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="Dc9-yB-F5l">
+            <objects>
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="acv-IT-ut6" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Rkt-me-lI2"/>
+                        <viewControllerLayoutGuide type="bottom" id="HpI-Sl-Fn4"/>
+                    </layoutGuides>
+                    <view key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="56L-xW-nsw">
+                        <rect key="frame" x="0.0" y="0.0" width="280" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <toolbarItems/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AAq-Rn-092" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-180.5" y="-516"/>
+        </scene>
+    </scenes>
+</document>
