@@ -10,8 +10,15 @@
 
 @interface MGTSplitViewController : UIViewController
 
-@property (strong, nonatomic) IBOutlet UIView *masterViewController;
-@property (strong, nonatomic) IBOutlet UIView *detailViewController;
+//@property (strong, nonatomic) UIView *masterView;
+//@property (strong, nonatomic) UIView *detailView;
+
+@property (strong, nonatomic) UIViewController *masterViewController;
+@property (strong, nonatomic) UIViewController *detailViewController;
+
+@property (nonatomic) NSInteger masterViewWidth;
+
+-(UIBarButtonItem *)backButton;
 
 @end
 
