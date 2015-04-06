@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		220AECF21AD330630035D224 /* UIBarButtonItem+DefaultBackButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 220AECF11AD330630035D224 /* UIBarButtonItem+DefaultBackButton.m */; };
+		225D95701AD2F35B00D2F332 /* MGTMasterViewControllerSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 225D956F1AD2F35B00D2F332 /* MGTMasterViewControllerSegue.m */; };
+		225D95731AD2F63400D2F332 /* MGTDetailViewControllerSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 225D95721AD2F63400D2F332 /* MGTDetailViewControllerSegue.m */; };
 		226333BF1ACC9AB9001EEB1D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 226333BE1ACC9AB9001EEB1D /* main.m */; };
 		226333C21ACC9AB9001EEB1D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 226333C11ACC9AB9001EEB1D /* AppDelegate.m */; };
 		226333C81ACC9AB9001EEB1D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 226333C61ACC9AB9001EEB1D /* Main.storyboard */; };
@@ -27,6 +30,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		220AECF01AD330630035D224 /* UIBarButtonItem+DefaultBackButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIBarButtonItem+DefaultBackButton.h"; path = "MGTSplitViewController/UIBarButtonItem+DefaultBackButton.h"; sourceTree = "<group>"; };
+		220AECF11AD330630035D224 /* UIBarButtonItem+DefaultBackButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIBarButtonItem+DefaultBackButton.m"; path = "MGTSplitViewController/UIBarButtonItem+DefaultBackButton.m"; sourceTree = "<group>"; };
+		225D956E1AD2F35B00D2F332 /* MGTMasterViewControllerSegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGTMasterViewControllerSegue.h; path = MGTSplitViewController/MGTMasterViewControllerSegue.h; sourceTree = "<group>"; };
+		225D956F1AD2F35B00D2F332 /* MGTMasterViewControllerSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGTMasterViewControllerSegue.m; path = MGTSplitViewController/MGTMasterViewControllerSegue.m; sourceTree = "<group>"; };
+		225D95711AD2F63400D2F332 /* MGTDetailViewControllerSegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGTDetailViewControllerSegue.h; path = MGTSplitViewController/MGTDetailViewControllerSegue.h; sourceTree = "<group>"; };
+		225D95721AD2F63400D2F332 /* MGTDetailViewControllerSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGTDetailViewControllerSegue.m; path = MGTSplitViewController/MGTDetailViewControllerSegue.m; sourceTree = "<group>"; };
 		226333B91ACC9AB9001EEB1D /* MGTSplitViewController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MGTSplitViewController.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		226333BD1ACC9AB9001EEB1D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../Example/Info.plist; sourceTree = "<group>"; };
 		226333BE1ACC9AB9001EEB1D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ../Example/main.m; sourceTree = "<group>"; };
@@ -60,6 +69,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		220AECE91AD2FD970035D224 /* Segues */ = {
+			isa = PBXGroup;
+			children = (
+				225D956E1AD2F35B00D2F332 /* MGTMasterViewControllerSegue.h */,
+				225D956F1AD2F35B00D2F332 /* MGTMasterViewControllerSegue.m */,
+				225D95711AD2F63400D2F332 /* MGTDetailViewControllerSegue.h */,
+				225D95721AD2F63400D2F332 /* MGTDetailViewControllerSegue.m */,
+			);
+			name = Segues;
+			sourceTree = "<group>";
+		};
 		226333B01ACC9AB9001EEB1D = {
 			isa = PBXGroup;
 			children = (
@@ -124,6 +144,9 @@
 			children = (
 				226333E31ACC9B30001EEB1D /* MGTSplitViewController.h */,
 				226333E41ACC9B30001EEB1D /* MGTSplitViewController.m */,
+				220AECF01AD330630035D224 /* UIBarButtonItem+DefaultBackButton.h */,
+				220AECF11AD330630035D224 /* UIBarButtonItem+DefaultBackButton.m */,
+				220AECE91AD2FD970035D224 /* Segues */,
 			);
 			name = MGTSplitViewController;
 			sourceTree = "<group>";
@@ -229,8 +252,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				226333E51ACC9B30001EEB1D /* MGTSplitViewController.m in Sources */,
+				225D95731AD2F63400D2F332 /* MGTDetailViewControllerSegue.m in Sources */,
 				226333C21ACC9AB9001EEB1D /* AppDelegate.m in Sources */,
+				220AECF21AD330630035D224 /* UIBarButtonItem+DefaultBackButton.m in Sources */,
 				226333BF1ACC9AB9001EEB1D /* main.m in Sources */,
+				225D95701AD2F35B00D2F332 /* MGTMasterViewControllerSegue.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

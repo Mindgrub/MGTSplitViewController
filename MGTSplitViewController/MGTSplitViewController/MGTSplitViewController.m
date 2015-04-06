@@ -16,21 +16,34 @@
 
 @implementation MGTSplitViewController
 
+-(instancetype)initWithMasterVC:(UIViewController *)masterViewController detailVC:(UIViewController *)detailViewController{
+    self.masterViewController = masterViewController;
+    self.detailViewController = detailViewController;
+    
+    return self;
+}
+
+-(void)awakeFromNib{
+    if (self.masterViewControllerStoryboardId) {
+        self.masterViewController = [self.storyboard instantiateViewControllerWithIdentifier:self.masterViewControllerStoryboardId];
+    }
+    if (self.detailViewControllerStoryboardId) {
+        self.detailViewController = [self.storyboard instantiateViewControllerWithIdentifier:self.detailViewControllerStoryboardId];
+    }
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [[self navigationController] setNavigationBarHidden:YES animated:YES];
     
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
     if (!self.masterViewWidth) {
         self.masterViewWidth = DEFAULT_MASTER_WIDTH;
-    }
-    
-    if (!self.masterViewController) {
-        self.masterViewController = [[UIViewController alloc] init];
-    }
-    
-    if (!self.detailViewController) {
-        self.detailViewController = [[UIViewController alloc] init];
     }
     
     [self setupContainers];
@@ -44,16 +57,35 @@
 
 
 - (void)setMasterViewController:(UIViewController *)masterViewController{
-    _masterViewController = masterViewController;
     
     if (![[[self.navigationController viewControllers] firstObject] isEqual:self]) {
         // instantiate a back button
         UIBarButtonItem *backButton = [self backButton];
         
-        
-        if ([[[masterViewController.navigationController viewControllers] firstObject] isEqual:masterViewController]) {
-            [self.navigationItem setBackBarButtonItem:backButton];
+        if ([masterViewController isKindOfClass:[UINavigationController class]]) {
+            if ([((UINavigationController *)masterViewController).viewControllers firstObject]) {
+                [[[((UINavigationController *)masterViewController).viewControllers firstObject] navigationItem] setLeftBarButtonItem:backButton];
+            }
         }
+    }
+    
+    _masterViewController = masterViewController;
+}
+
+- (UIBarButtonItem *)backButton{
+    UIBarButtonItem *barButton = [[UIBarButtonItem alloc]init];
+    
+    return [barButton backButtonWith:@"Back         "
+                           tintColor:[UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0]
+                              target:self
+                           andAction:@selector(goBack)];
+    
+    //return [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
+}
+
+-(void)goBack{
+    if (![[[self.navigationController viewControllers] firstObject] isEqual:self]) {
+        [self.navigationController popViewControllerAnimated:YES];
     }
 }
 
@@ -68,7 +100,7 @@
     UIView *detailContainerView = [[UIView alloc] initWithFrame:CGRectZero];
     detailContainerView.translatesAutoresizingMaskIntoConstraints = NO;
     // Setting bg color just for visual
-    detailContainerView.backgroundColor = [UIColor darkGrayColor];
+    //detailContainerView.backgroundColor = [UIColor darkGrayColor];
     [self.view addSubview:detailContainerView];
     
     NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(masterContainerView, detailContainerView);
@@ -108,12 +140,11 @@
     [self addChildViewController:controller];
     
     //2. Define the controller's view size
-    controller.view = [[UIView alloc] initWithFrame:CGRectZero];
     controller.view.translatesAutoresizingMaskIntoConstraints = NO;
     if ([controller isEqual:self.masterViewController]) {
         controller.view.backgroundColor = [UIColor greenColor];
     }else{
-        controller.view.backgroundColor = [UIColor blueColor];
+        //controller.view.backgroundColor = [UIColor blueColor];
     }
     
     [containerView addSubview:controller.view];
@@ -139,11 +170,10 @@
 }
 
 
-- (UIBarButtonItem *)backButton{
-    return [self.navigationItem backBarButtonItem];
-}
 
 
+
+/*
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -156,6 +186,6 @@
     }
     
 }
-
+*/
 
 @end
