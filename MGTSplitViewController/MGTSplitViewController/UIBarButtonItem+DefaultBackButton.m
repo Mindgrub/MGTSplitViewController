@@ -12,19 +12,21 @@
 @implementation UIBarButtonItem (DefaultBackButton)
 
 
-- (UIBarButtonItem *)backButtonWith:(NSString *)title tintColor:(UIColor *)color target:(id)target andAction:(SEL)action {
++ (UIBarButtonItem *)backButtonWithTitle:(NSString *)title tintColor:(UIColor *)color target:(id)target andAction:(SEL)action {
     
     UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [backButton setFrame:CGRectMake(0, 0, 110.0f, 20.5f)];
     UIImage *backImage = [UIImage imageNamed:@"back.png"];
-    //backImage = [self getImageWithUnsaturatedPixelsOfImage:backImage];
-    backImage = [self image:backImage tintedWithColor:color fraction:0.0];
+    //backImage = [UIBarButtonItem getImageWithUnsaturatedPixelsOfImage:backImage];
+    backImage = [UIBarButtonItem image:backImage tintedWithColor:color fraction:0.0];
     
     // setting the image for both states
     [backButton setBackgroundImage:[backImage resizableImageWithCapInsets:UIEdgeInsetsMake(backImage.size.width, backImage.size.height, backImage.size.width, backImage.size.height)] forState:UIControlStateNormal];
-    [backButton setBackgroundImage:[[self image:backImage byApplyingAlpha:0.3] resizableImageWithCapInsets:UIEdgeInsetsMake(backImage.size.width, backImage.size.height, backImage.size.width, backImage.size.height)] forState:UIControlStateHighlighted];
+    [backButton setBackgroundImage:[[UIBarButtonItem image:backImage byApplyingAlpha:0.3] resizableImageWithCapInsets:UIEdgeInsetsMake(backImage.size.width, backImage.size.height, backImage.size.width, backImage.size.height)] forState:UIControlStateHighlighted];
     
-    [backButton setTitleEdgeInsets:UIEdgeInsetsMake(2, 15, 0, 0)];
+    [backButton setTitleEdgeInsets:UIEdgeInsetsMake(2, 21, 0, 0)];
+    backButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    //backButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:17.0];
     [backButton setTitle:title forState:UIControlStateNormal];
     
     [backButton setTitleColor:color forState:UIControlStateNormal];
@@ -35,11 +37,10 @@
     UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     [backButtonItem setTitle:title];
     
-    
     return backButtonItem;
 }
 
-- (UIImage *)image:(UIImage *)image byApplyingAlpha:(CGFloat) alpha {
++ (UIImage *)image:(UIImage *)image byApplyingAlpha:(CGFloat) alpha {
     UIGraphicsBeginImageContextWithOptions(image.size, NO, 0.0f);
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     CGRect rect = CGRectMake(0, 0, image.size.width, image.size.height);
@@ -54,7 +55,7 @@
     return newImage;
 }
 
-- (UIImage *)image:(UIImage *)image tintedWithColor:(UIColor *)color fraction:(CGFloat)fraction
++ (UIImage *)image:(UIImage *)image tintedWithColor:(UIColor *)color fraction:(CGFloat)fraction
 {
     if ([UIScreen instancesRespondToSelector:@selector(scale)]) {
         UIGraphicsBeginImageContextWithOptions(image.size, NO, 0.0f);
