@@ -16,7 +16,7 @@
 
 @implementation MGTSplitViewController
 
--(instancetype)initWithMasterVC:(UIViewController *)masterViewController detailVC:(UIViewController *)detailViewController{
+-(id)initWithMasterVC:(UIViewController *)masterViewController detailVC:(UIViewController *)detailViewController{
     self.masterViewController = masterViewController;
     self.detailViewController = detailViewController;
     
@@ -24,7 +24,6 @@
 }
 
 -(void)awakeFromNib{
-    
     if (self.masterViewControllerStoryboardId) {
         self.masterViewController = [self.storyboard instantiateViewControllerWithIdentifier:self.masterViewControllerStoryboardId];
     }
@@ -36,14 +35,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
-    if (self.backButtonTintColor == nil) {
-        self.backButtonTintColor = [UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0];
-    }
-    if (self.backButtonTitle == nil) {
-        self.backButtonTitle = @"Back";
-    }
-    
     [[self navigationController] setNavigationBarHidden:YES animated:YES];
     
 }
@@ -51,57 +42,37 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
-    if (!self.masterViewWidth) {
-        self.masterViewWidth = DEFAULT_MASTER_WIDTH;
-    }
-    
-    //self.masterViewController.navigationItem.leftBarButtonItem = [self backButton];
     [self setSplitViewBackButtonForViewController:self.masterViewController];
     
-    if (self.masterViewController && self.detailViewController) {
-        [self setupContainers];
-    }
-    else{
-        NSLog(@"ERROR, no master/detail view contorller.");
-    }
-    
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
--(void)setSplitViewBackButtonForViewController:(UIViewController *)viewController{
-    if ([viewController isKindOfClass:[UINavigationController class]]) {
-        [self setSplitViewBackButtonForViewController:[((UINavigationController *)viewController).viewControllers firstObject]];
-    }
-    
-    // If tab bar controller, set the delegates of each of its vc's
-    else if ([viewController isKindOfClass:[UITabBarController class]]){
-        for (UIViewController *vc in ((UITabBarController *)viewController).viewControllers) {
-            [self setSplitViewBackButtonForViewController:vc];
+    if (self.masterViewController) {
+        if (self.detailViewController) {
+            [self setupContainers];
+        }
+        else {
+            NSLog(@"ERROR, no detail view contorller.");
         }
     }
-    
     else{
-        viewController.navigationItem.leftBarButtonItem = [self backButton];
+        if (!self.detailViewController) {
+            NSLog(@"ERROR, no master or detail view contorller.");
+        }
+        NSLog(@"ERROR, no master view contorller.");
     }
+    
 }
 
-
--(void)setSplitViewDelegate:(UIViewController *)viewController{
+-(void)setSplitViewDelegateForViewController:(UIViewController *)viewController{
     // If navigation controller, set the delegate of its root vc.
     // It's up to the developer to pass the delegate on when a new vc is pushed onto the navigation stack.
     if ([viewController isKindOfClass:[UINavigationController class]]){
-        [self setSplitViewDelegate:((UINavigationController *)viewController).viewControllers[0]];
+        [self setSplitViewDelegateForViewController:((UINavigationController *)viewController).viewControllers[0]];
     }
     
     // If tab bar controller, set the delegates of each of its vc's
     else if ([viewController isKindOfClass:[UITabBarController class]]){
         for (UIViewController *vc in ((UITabBarController *)viewController).viewControllers) {
             if ([vc conformsToProtocol:@protocol(MGTSplitViewControllerPropertyDelegate)]) {
-                [self setSplitViewDelegate:vc];
+                [self setSplitViewDelegateForViewController:vc];
             }
         }
     }
@@ -111,63 +82,18 @@
     }
 }
 
-
 - (void)setMasterViewController:(UIViewController *)masterViewController{
-    [self setSplitViewDelegate:masterViewController];
-    
+    [self setSplitViewDelegateForViewController:masterViewController];
     _masterViewController = masterViewController;
 }
 
 - (void)setDetailViewController:(UIViewController *)detailViewController{
-    [self setSplitViewDelegate:detailViewController];
+    [self setSplitViewDelegateForViewController:detailViewController];
     _detailViewController = detailViewController;
 }
 
-- (UIBarButtonItem *)backButton{
-    return [UIBarButtonItem backButtonWithTitle:self.backButtonTitle
-                                      tintColor:self.backButtonTintColor
-                                         target:self
-                                      andAction:@selector(goBack)];
-}
 
-- (UIBarButtonItem *)backButtonWithTitle:(NSString *)title{
-    
-    return [UIBarButtonItem backButtonWithTitle:title
-                                tintColor:self.backButtonTintColor
-                                   target:self
-                                andAction:@selector(goBack)];
-    
-}
-
-- (UIBarButtonItem *)backButtonWithTintColor:(UIColor *)tintColor{
-    
-    return [UIBarButtonItem backButtonWithTitle:self.backButtonTitle
-                                tintColor:tintColor
-                                   target:self
-                                andAction:@selector(goBack)];
-}
-
-- (UIBarButtonItem *)backButtonWithTitle:(NSString *)title tintColor:(UIColor *)tintColor{
-    
-    return [UIBarButtonItem backButtonWithTitle:title
-                                tintColor:tintColor
-                                   target:self
-                                andAction:@selector(goBack)];
-    
-}
-
--(void)setBackButtonWithTitle:(NSString *)title{
-    self.backButtonTitle = title;
-    
-}
-
--(void)setBackButtonWithTitle:(NSString *)title tintColor:(UIColor *)tintColor{
-    
-}
-
--(void)setBackButtonWithTintColor:(UIColor *)tintColor{
-    
-}
+#pragma mark - Container View Setup
 
 -(void)setupContainers{
     
@@ -182,7 +108,7 @@
     NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(masterContainerView, detailContainerView);
     
     // SET CONTAINER AUTO LAYOUT CONSTRAINTS
-    NSString *masterWidthFormat = [[@"H:[masterContainerView(" stringByAppendingString:[@(self.masterViewWidth) stringValue]] stringByAppendingString:@")]"];
+    NSString *masterWidthFormat = [[@"H:[masterContainerView(" stringByAppendingString:[@(DEFAULT_MASTER_WIDTH) stringValue]] stringByAppendingString:@")]"];
     
     [self.view addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:masterWidthFormat
                                                                        options:0
@@ -233,6 +159,7 @@
     
 }
 
+
 #pragma mark - MGTSplitViewControllerDelegate
 
 -(void)goBack{
@@ -242,15 +169,117 @@
     }
 }
 
--(NSArray *)viewControllersForSplitView:(MGTSplitViewController *)splitView{
-    
-    return @[splitView.masterViewController, splitView.detailViewController];
-}
-
 -(NSArray *)viewControllers{
     
     return @[self.masterViewController, self.detailViewController];
 }
+
+
+#pragma mark Back Button
+
+-(void)setSplitViewBackButtonForViewController:(UIViewController *)viewController{
+    if ([viewController isKindOfClass:[UINavigationController class]]) {
+        [self setSplitViewBackButtonForViewController:[((UINavigationController *)viewController).viewControllers firstObject]];
+    }
+    
+    // If tab bar controller, set the buttons of each of its vc's
+    else if ([viewController isKindOfClass:[UITabBarController class]]){
+        for (UIViewController *vc in ((UITabBarController *)viewController).viewControllers) {
+            [self setSplitViewBackButtonForViewController:vc];
+        }
+    }
+    
+    else{
+        viewController.navigationItem.leftBarButtonItem = [self backButtonDefault];
+    }
+}
+
+- (UIBarButtonItem *)backButtonDefault{
+    return [self backButtonWithTitle:@"Back" tintColor:[UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0]];
+}
+
+- (UIBarButtonItem *)backButtonWithTitle:(NSString *)title{
+    
+    return [self backButtonWithTitle:title tintColor:[UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0]];
+    
+}
+
+- (UIBarButtonItem *)backButtonWithTintColor:(UIColor *)tintColor{
+    return [self backButtonWithTitle:@"Back" tintColor:tintColor];
+}
+
+
+- (UIBarButtonItem *)backButtonWithTitle:(NSString *)title tintColor:(UIColor *)tintColor{
+    UILabel *label = [[UILabel alloc]init];
+    label.text = title;
+    
+    CGFloat buttonFrameWidth = 35.0f + [label.text boundingRectWithSize:label.frame.size
+                                                                options:NSStringDrawingUsesLineFragmentOrigin
+                                                             attributes:@{ NSFontAttributeName:label.font }
+                                                                context:nil].size.width;
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.frame = CGRectMake(0, 0, buttonFrameWidth, 20.5f);
+    
+    UIImage *backImage = [UIImage imageNamed:@"back"];
+    CGFloat backImageWidth = backImage.size.width;
+    CGFloat backImageHeight = backImage.size.height;
+    
+    // Tint Image
+    if ([UIScreen instancesRespondToSelector:@selector(scale)]) {
+        UIGraphicsBeginImageContextWithOptions(backImage.size, NO, 0.0f);
+    }
+    else {
+        UIGraphicsBeginImageContext([backImage size]);
+    }
+    
+    CGRect rect = CGRectZero;
+    rect.size = backImage.size;
+    [tintColor set];
+    UIRectFill(rect);
+    [backImage drawInRect:rect blendMode:kCGBlendModeDestinationIn alpha:1.0];
+    backImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    // Resize Image
+    backImage = [backImage resizableImageWithCapInsets:UIEdgeInsetsMake(backImageWidth, backImageHeight, backImageWidth, backImageHeight)];
+    
+    [button setBackgroundImage:backImage forState:UIControlStateNormal];
+    
+    
+    // Set Highlighted Image Tint
+    UIImage *highlightedBackImage = backImage;
+    
+    UIGraphicsBeginImageContextWithOptions(highlightedBackImage.size, NO, 0.0f);
+    CGContextRef ctx = UIGraphicsGetCurrentContext();
+    rect = CGRectMake(0, 0, backImageWidth, backImageHeight);
+    CGContextScaleCTM(ctx, 1, -1);
+    CGContextTranslateCTM(ctx, 0, -backImageHeight);
+    CGContextSetBlendMode(ctx, kCGBlendModeMultiply);
+    CGContextSetAlpha(ctx, 0.3);
+    CGContextDrawImage(ctx, rect, highlightedBackImage.CGImage);
+    highlightedBackImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    highlightedBackImage = [highlightedBackImage resizableImageWithCapInsets:UIEdgeInsetsMake(backImageWidth, backImageHeight, backImageWidth, backImageHeight)];
+    
+    const CGFloat* components = CGColorGetComponents(tintColor.CGColor);
+    [button setTitleColor:[UIColor colorWithRed:components[0] green:components[1] blue:components[2] alpha:0.3f] forState:UIControlStateHighlighted];
+    [button setBackgroundImage:highlightedBackImage forState:UIControlStateHighlighted];
+    
+    // Set Title
+    [button setTitleEdgeInsets:UIEdgeInsetsMake(0, 21, 0, 0)];
+    button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    [button setTitle:title forState:UIControlStateNormal];
+    [button setTitleColor:tintColor forState:UIControlStateNormal];
+    
+    // Add target and action
+    [button addTarget:self action:@selector(goBack) forControlEvents:UIControlEventTouchUpInside];
+    
+    return [[UIBarButtonItem alloc] initWithCustomView:button];
+    
+}
+
 
 
 @end

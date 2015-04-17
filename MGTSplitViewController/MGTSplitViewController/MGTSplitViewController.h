@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "UIBarButtonItem+DefaultBackButton.h"
 
 @class MGTSplitViewController;
 
@@ -16,12 +15,12 @@
 
 -(NSArray *)viewControllers;
 -(void)goBack;
+-(UIBarButtonItem *)backButtonDefault;
 -(UIBarButtonItem *)backButtonWithTitle:(NSString *)title;
 -(UIBarButtonItem *)backButtonWithTintColor:(UIColor *)tintColor;
 -(UIBarButtonItem *)backButtonWithTitle:(NSString *)title tintColor:(UIColor *)tintColor;
 
 @end
-
 
 
 @protocol MGTSplitViewControllerPropertyDelegate <NSObject>
@@ -32,7 +31,6 @@
 @end
 
 
-
 @interface MGTSplitViewController : UIViewController <MGTSplitViewControllerDelegate>
 
 @property (strong, nonatomic) UIViewController *masterViewController;
@@ -41,12 +39,7 @@
 @property  (nonatomic, strong) NSString *masterViewControllerStoryboardId;
 @property  (nonatomic, strong) NSString *detailViewControllerStoryboardId;
 
-@property (nonatomic) NSInteger masterViewWidth;
-@property (nonatomic, strong) NSString *backButtonTitle;
-@property (nonatomic, strong) UIColor *backButtonTintColor;
-
 -(id)initWithMasterVC:(UIViewController *)masterViewController detailVC:(UIViewController *)detailViewController;
-
 
 @end
 
