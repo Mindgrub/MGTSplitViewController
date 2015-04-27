@@ -190,7 +190,10 @@
     }
     
     else{
-        viewController.navigationItem.leftBarButtonItem = [self backButtonDefault];
+        UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+        [negativeSpacer setWidth:-10];
+        
+        viewController.navigationItem.leftBarButtonItems = [NSArray arrayWithObjects:negativeSpacer,[self backButtonDefault],nil];
     }
 }
 

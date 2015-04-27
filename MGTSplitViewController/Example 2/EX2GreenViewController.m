@@ -22,7 +22,12 @@
     
     UINavigationItem *navItem = [[UINavigationItem alloc] init];
     
-    navItem.leftBarButtonItem = [self.splitViewDelegate backButtonWithTitle:@"GET BACK" tintColor:[UIColor redColor]];
+    UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    [negativeSpacer setWidth:-10];
+    
+    UIBarButtonItem *backButton = [self.splitViewDelegate backButtonWithTitle:@"GET BACK" tintColor:[UIColor redColor]];
+    
+    navItem.leftBarButtonItems = [NSArray arrayWithObjects:negativeSpacer,backButton,nil];
     
     navBar.items = @[navItem];
     
