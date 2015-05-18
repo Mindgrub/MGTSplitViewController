@@ -71,9 +71,7 @@
     // If tab bar controller, set the delegates of each of its vc's
     else if ([viewController isKindOfClass:[UITabBarController class]]){
         for (UIViewController *vc in ((UITabBarController *)viewController).viewControllers) {
-            if ([vc conformsToProtocol:@protocol(MGTSplitViewControllerPropertyDelegate)]) {
-                [self setSplitViewDelegateForViewController:vc];
-            }
+            [self setSplitViewDelegateForViewController:vc];
         }
     }
     
